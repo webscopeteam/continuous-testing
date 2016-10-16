@@ -1,0 +1,23 @@
+default:
+  suites:
+    default:
+      contexts:
+        - FeatureContext
+        - WebscopeDrupalContext
+        - WebscopeMinkContext
+        - WysiwygSubContext # Needs to be modified for D8
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      base_url: http://localhost:8000/
+      selenium2:
+        wd_host: "http://localhost:4444/wd/hub"
+    Drupal\DrupalExtension:
+      blackbox: ~
+      api_driver: 'drupal'
+      drupal:
+        drupal_root: '/home/rof/clone/pantheon_repo'
