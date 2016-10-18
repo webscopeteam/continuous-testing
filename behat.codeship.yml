@@ -3,9 +3,6 @@ default:
     default:
       contexts:
         - FeatureContext
-        - WebscopeDrupalContext
-        - WebscopeMinkContext
-        - WysiwygSubContext # Needs to be modified for D8
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MessageContext

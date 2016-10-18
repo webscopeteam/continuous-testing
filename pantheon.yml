@@ -1,0 +1,9 @@
+api_version: 1
+
+
+workflows:
+  sync_code:
+    after:
+        - type: webphp
+          description: Integrate With Codeship
+          script: private/scripts/codeship_integration.php

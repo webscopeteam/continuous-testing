@@ -54,8 +54,14 @@ terminus site wake --site="$PANTHEON_SITE" --env="$PENV"
 REPO="ssh://codeserver.dev.$PUUID@codeserver.dev.$PUUID.drush.in:2222/~/repository.git"
 sshpass -p $ROBOT_PASSWORD git clone --depth 1 --branch "$BRANCH" "$REPO" pantheon_repo
 
+# Move settings.php
+mv settings.codeship.php pantheon_repo/sites/default
+
 # Move into site.
 cd pantheon_repo
+
+# Trigger a new backup
+terminus site backups create --site=$PANTHEON_SITE --env=$PENV --element=db
 
 # Get Pantheon DB
 terminus site backups get --site=$PANTHEON_SITE --env=$PENV --element=database --to=panthbackup.sql.gz --latest
@@ -64,8 +70,6 @@ echo "Decompressing DB"
 gunzip panthbackup.sql.gz -v
 
 # Upload DB
-OUTPUT="$(ls /home/rof/codeship)"
-echo "${OUTPUT}"
 drush sqlc < panthbackup.sql
 # Sanitize database
 drush sqlsan --sanitize-email="build+%uid@test.co.nz" -y
